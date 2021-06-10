@@ -2,7 +2,7 @@
 Small management based project using Python Flask and MySql
 
 
-Features:
+Features:<br>
 1)Login for Student and Admin<br>
 2)Admin can add new books,student and other admins.<br>
 3)Admin can remove books,students and other admins.<br>
@@ -12,5 +12,5 @@ Features:
 
 
 SQL TABLE Samples
-![](pic1.png)<br>
+![](pic1.png)<p><p>
 ![](pic2.png)
