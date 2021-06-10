@@ -1,0 +1,335 @@
+Microsoft Windows [Version 10.0.19042.928]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>myswl -u root -p
+'myswl' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: *********************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 62
+Server version: 8.0.25 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use tem1
+ERROR 1049 (42000): Unknown database 'tem1'
+mysql> use temp1;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_temp1 |
++-----------------+
+| admintable      |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> select * from admintable;
++----+----------+------+
+| id | username | pwd  |
++----+----------+------+
+|  1 | admin1   | 123s |
+|  2 | admin2   | 223s |
++----+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| temp1              |
+| world              |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> create databse managelibraryDBMS
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse managelibraryDBMS' at line 1
+mysql> create database managelibraryDBMS;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use managelibraryDBMS;
+Database changed
+mysql> create table adminTable(id int AUTO_INCREMENT,username varchar(30),pwd varchar(30),primary key(id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> alter table adminTable add column adminName varchar(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc adminTable;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| username  | varchar(30) | YES  |     | NULL    |                |
+| pwd       | varchar(30) | YES  |     | NULL    |                |
+| adminName | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> create table studentTable(id int AUTO_INCREMENT,username varchar(30),pwd varchar(30),studentName varchar(30),primary key(id));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++-----------------------------+
+| Tables_in_managelibrarydbms |
++-----------------------------+
+| admintable                  |
+| studenttable                |
++-----------------------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from admintable;
+Empty set (0.00 sec)
+
+mysql> insert into admintable (username,pwd,adminname) values('admin1','123s','A');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into admintable (username,pwd,adminname) values('admin2','123s','B');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into admintable (username,pwd,adminname) values('admin3','123s','C');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create table studentTable(id int AUTO_INCREMENT,bookname varchar(30),primary key(bookid));
+ERROR 1050 (42S01): Table 'studenttable' already exists
+mysql> create table inventoryBook(id int AUTO_INCREMENT,bookname varchar(30),primary key(bookid));
+ERROR 1072 (42000): Key column 'bookid' doesn't exist in table
+mysql> create table inventoryBook(bookid int AUTO_INCREMENT,bookname varchar(30),primary key(bookid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table inventoryTable add column nocopies number;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number' at line 1
+mysql> alter table inventoryTable add column nocopies int;
+ERROR 1146 (42S02): Table 'managelibrarydbms.inventorytable' doesn't exist
+mysql> alter table inventoryBook add column nocopies int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++-----------------------------+
+| Tables_in_managelibrarydbms |
++-----------------------------+
+| admintable                  |
+| inventorybook               |
+| studenttable                |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into inventoryBook(name,nocopies)values(Book A,21);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'A,21)' at line 1
+mysql> insert into inventoryBook(name,nocopies)values('Book A',21);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> insert into inventoryBook(bookname,nocopies)values('Book A',21);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into inventoryBook(bookname,nocopies)values('Book B',5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into inventoryBook(bookname,nocopies)values('Book D',15);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from inventoryBook;
++--------+----------+----------+
+| bookid | bookname | nocopies |
++--------+----------+----------+
+|      1 | Book A   |       21 |
+|      2 | Book B   |        5 |
+|      3 | Book D   |       15 |
++--------+----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> desc studenttable
+    -> ;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id          | int         | NO   | PRI | NULL    | auto_increment |
+| username    | varchar(30) | YES  |     | NULL    |                |
+| pwd         | varchar(30) | YES  |     | NULL    |                |
+| studentName | varchar(30) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> desc admintable;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| username  | varchar(30) | YES  |     | NULL    |                |
+| pwd       | varchar(30) | YES  |     | NULL    |                |
+| adminName | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc inventoryBook;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| bookid   | int         | NO   | PRI | NULL    | auto_increment |
+| bookname | varchar(30) | YES  |     | NULL    |                |
+| nocopies | int         | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table bookStatus(id int auto_increment,bookid int,bookname varchar(30),allotedon date,studentid varchar(10),status varchar(20),primary key(id));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++-----------------------------+
+| Tables_in_managelibrarydbms |
++-----------------------------+
+| admintable                  |
+| bookstatus                  |
+| inventorybook               |
+| studenttable                |
++-----------------------------+
+4 rows in set (0.00 sec)
+
+mysql> now()
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now()' at line 1
+mysql> desc bookstatus;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| bookid    | int         | YES  |     | NULL    |                |
+| bookname  | varchar(30) | YES  |     | NULL    |                |
+| allotedon | date        | YES  |     | NULL    |                |
+| studentid | varchar(10) | YES  |     | NULL    |                |
+| status    | varchar(20) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into bookstatus(bookid,bookname,allotedon,studentid,status) values(1,"Book A",now(),15231,'Alloted');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> select * from book status;
+ERROR 1146 (42S02): Table 'managelibrarydbms.book' doesn't exist
+mysql> select * from bookstatus;
++----+--------+----------+------------+-----------+---------+
+| id | bookid | bookname | allotedon  | studentid | status  |
++----+--------+----------+------------+-----------+---------+
+|  1 |      1 | Book A   | 2021-06-10 | 15231     | Alloted |
++----+--------+----------+------------+-----------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into bookstatus(bookid,bookname,allotedon,studentid,status) values(2,"Book B",now(),15231,datediff(days,));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '))' at line 1
+mysql> insert into bookstatus(bookid,bookname,allotedon,studentid,status) values(2,"Book B",now(),15231,datediff(days,select allotedon from bookstatus where id=2,now()));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select allotedon from bookstatus where id=2,now()))' at line 1
+mysql> select datediff(minutes,select allotedon from bookstatus where id=1,now());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select allotedon from bookstatus where id=1,now())' at line 1
+mysql> select datediff(minutes,select allotedon from bookstatus where id=1,now()) as datediff;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select allotedon from bookstatus where id=1,now()) as datediff' at line 1
+mysql> alter bookstatus add column returneddate date;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'bookstatus add column returneddate date' at line 1
+mysql> alter table bookstatus add column returneddate date;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update table bookstatus where is =1 set returneddate='2021-06-12';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bookstatus where is =1 set returneddate='2021-06-12'' at line 1
+mysql> update table bookstatus where id=1 set returneddate='2021-06-12';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bookstatus where id=1 set returneddate='2021-06-12'' at line 1
+mysql> update table bookstatus set returneddate='2021-06-12' where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bookstatus set returneddate='2021-06-12' where id=1' at line 1
+mysql> update table bookstatus set returneddate=2021-06-12 where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bookstatus set returneddate=2021-06-12 where id=1' at line 1
+mysql> update bookstatus set returneddate='2021-06-12' where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from bookstatus;
++----+--------+----------+------------+-----------+---------+--------------+
+| id | bookid | bookname | allotedon  | studentid | status  | returneddate |
++----+--------+----------+------------+-----------+---------+--------------+
+|  1 |      1 | Book A   | 2021-06-10 | 15231     | Alloted | 2021-06-12   |
++----+--------+----------+------------+-----------+---------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff (days,'2017/08/25','2011/08/25');
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select datediff (year,'2017/08/25','2011/08/25');
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select datediff (year,'2017/08/25','2011/08/25') as datediff;
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select datediff (year,'2017-08-25','2011-08-25');
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'datediff'
+mysql> select datediff ('2017-08-25','2011-08-25');
++--------------------------------------+
+| datediff ('2017-08-25','2011-08-25') |
++--------------------------------------+
+|                                 2192 |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table bookstatus add column totaldays int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from bookstatus;
++----+--------+----------+------------+-----------+---------+--------------+-----------+
+| id | bookid | bookname | allotedon  | studentid | status  | returneddate | totaldays |
++----+--------+----------+------------+-----------+---------+--------------+-----------+
+|  1 |      1 | Book A   | 2021-06-10 | 15231     | Alloted | 2021-06-12   |      NULL |
++----+--------+----------+------------+-----------+---------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> update bookstatus set='Returned',totaldays=select datediff(select allotedon from bookstatus where id=1,select returneddate from bookstatus where id=1) where returneddate is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Returned',totaldays=select datediff(select allotedon from bookstatus where id=' at line 1
+mysql> update bookstatus set='Returned',totaldays=(select datediff(select allotedon from bookstatus where id=1,select returneddate from bookstatus where id=1)) where returneddate is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Returned',totaldays=(select datediff(select allotedon from bookstatus where id' at line 1
+mysql> update bookstatus totaldays=(select datediff(select allotedon from bookstatus where id=1,select returneddate from bookstatus where id=1)) where returneddate is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=(select datediff(select allotedon from bookstatus where id=1,select returneddat' at line 1
+mysql> update bookstatus set='Returned' where returneddate is not  null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Returned' where returneddate is not  null' at line 1
+mysql> update bookstatus set='Returned' where returneddate is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Returned' where returneddate is not null' at line 1
+mysql> update bookstatus set='Returned' where totaldays is null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Returned' where totaldays is null' at line 1
+mysql> update bookstatus set status='Returned' where totaldays is null;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update bookstatus set totaldays=(select datediff(select allotedon from bookstatus where id=1,select returneddate from bookstatus where id=1)) where returneddate is not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select allotedon from bookstatus where id=1,select returneddate from bookstatus ' at line 1
+mysql> select * from bookstatus;
++----+--------+----------+------------+-----------+----------+--------------+-----------+
+| id | bookid | bookname | allotedon  | studentid | status   | returneddate | totaldays |
++----+--------+----------+------------+-----------+----------+--------------+-----------+
+|  1 |      1 | Book A   | 2021-06-10 | 15231     | Returned | 2021-06-12   |      NULL |
++----+--------+----------+------------+-----------+----------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> update bookstatus set totaldays=(select datediff('(select allotedon from bookstatus where id=1)','(select returneddate from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select allotedon from bookstatus where id=1)'
+mysql> update bookstatus set totaldays=(select datediff('(select returneddate from bookstatus where id=1)','(select returneddate from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select returneddate from bookstatus where id=1)'
+mysql> update bookstatus set totaldays=(select datediff('(select returneddate from bookstatus where id=1)','(select allotedon from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select returneddate from bookstatus where id=1)'
+mysql> update bookstatus set totaldays=(select datediff('(select returneddate from bookstatus where id=1)','(select allotedon from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select returneddate from bookstatus where id=1)'
+mysql> update bookstatus set returneddate=now() where id=1;
+Query OK, 1 row affected, 1 warning (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> update bookstatus set totaldays=(select datediff('(select returneddate from bookstatus where id=1)','(select allotedon from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select returneddate from bookstatus where id=1)'
+mysql> update bookstatus set totaldays=(select datediff('(select str_to_date(returneddate) from bookstatus where id=1)','(select allotedon from bookstatus where id=1)')) where returneddate is not null;
+ERROR 1292 (22007): Incorrect datetime value: '(select str_to_date(returneddate) from bookstatus where id=1)'
+mysql>
